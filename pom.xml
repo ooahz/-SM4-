@@ -21,6 +21,7 @@
             <artifactId>commons-codec</artifactId>
             <version>1.10</version>
         </dependency>
+<!--        sm4加密依赖-->
         <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-jdk15to18</artifactId>
@@ -30,6 +31,13 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
+<!--    主要使用HexUtil工具类-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>4.6.10</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

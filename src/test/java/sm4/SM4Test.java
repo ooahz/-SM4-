@@ -3,8 +3,6 @@ package sm4;
 import cn.hutool.core.util.HexUtil;
 import com.gm.sm4.SM4Helper;
 import com.gm.sm4.SM4KeyHelper;
-import com.gm.sm4.StringtoHex;
-import org.apache.commons.codec.binary.Hex;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -23,7 +21,7 @@ public class SM4Test {
     public void testGenerateKey() throws Exception {
         byte[] key = SM4KeyHelper.generateKey();
         Assert.assertNotNull("密钥生成失败", key);
-        System.out.println(String.format("随机生成密钥：%s", Hex.encodeHexString(key)));
+        System.out.println(String.format("随机生成密钥：%s", HexUtil.encodeHexStr(key)));
     }
 
     /**
@@ -42,7 +40,7 @@ public class SM4Test {
             modeAndPadding = "SM4/CBC/PKCS7Padding";
         }
         byte[] decryptRet = SM4Helper.decrypt(HexUtil.decodeHex(inputHex), HexUtil.decodeHex(keyHex.toCharArray()), modeAndPadding, iv);
-        System.out.println(String.format("解密模式 = %s, 解密结果：s%", modeAndPadding , new String(decryptRet)));
+        System.out.println(String.format("解密模式 = %s, 解密结果：%s", modeAndPadding , new String(decryptRet)));
     }
 
     /**
@@ -56,11 +54,12 @@ public class SM4Test {
         //        提供填充模式
         String modeAndPadding = "SM4/ECB/PKCS7Padding";
         byte[] iv = null;
+        //ECB只需要一个key，CBC模式还需要一个iv值
         if (null != ivHex) {
             iv = HexUtil.decodeHex(ivHex.toCharArray());
             modeAndPadding = "SM4/CBC/PKCS7Padding";
         }
-        byte[] encryptRet = SM4Helper.encrypt(HexUtil.decodeHex(inputHex), HexUtil.decodeHex(keyHex.toCharArray()), modeAndPadding, iv);
+        byte[] encryptRet = SM4Helper.encrypt(inputTest.getBytes(), HexUtil.decodeHex(keyHex.toCharArray()), modeAndPadding, iv);
         String hexStr = HexUtil.encodeHexStr(encryptRet);
         System.out.println(String.format("加密模式 = %s, 密文： %s", modeAndPadding, hexStr));
     }
